@@ -24,8 +24,6 @@ def allowed_file(filename):
     return '.' in filename and \
            filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
 
-
-
 @app.route('/')
 def upload_form():
 	return render_template('upload.html')
@@ -68,19 +66,9 @@ def upload_file():
             transformed_image = data_transform(new_image)
             new_prediction = model.forward((transformed_image).to(device).unsqueeze(0))
             new_prediction = int(torch.max(new_prediction, 1)[1])
-            print("Predicted Class:", labels_for_viz[new_prediction])
-
-            return render_template('upload.html', filename=filename)
-    return '''
-    <!doctype html>
-    <title>Upload new File</title>
-    <h1>Upload new File</h1>
-    <form method=post enctype=multipart/form-data>
-      <input type=file name=file>
-      <input type=submit value=Upload>
-    </form>
-    '''
-
+            print("Predicted class is " + labels_for_viz[new_prediction])
+            return render_template('upload.html', filename=filename, predectedvalue = labels_for_viz[new_prediction])
+    return 
 
 if __name__ == '__main__':
    app.run(debug=True)

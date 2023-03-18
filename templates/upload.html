@@ -1,29 +1,44 @@
 <!doctype html>
-<title>Python Flask File Upload Example</title>
-<h2>Select a file to upload</h2>
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet"
+	integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"
+	integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN"
+	crossorigin="anonymous"></script>
+
+<title>Corn-Leaf-Deasase-Detection</title>
+<h1 class="text-center">Corn Leaf Deasase Detection</h1>
+<h6 class="text-center">Select a file to upload</h6>
 <p>
 	{% with messages = get_flashed_messages() %}
-	  {% if messages %}
-		<ul>
-		{% for message in messages %}
-		  <li>{{ message }}</li>
-		{% endfor %}
-		</ul>
-	  {% endif %}
-	{% endwith %}
+	{% if messages %}
+<ul>
+	{% for message in messages %}
+	<li>{{ message }}</li>
+	{% endfor %}
+</ul>
+{% endif %}
+{% endwith %}
 </p>
 {% if filename %}
-	<div>
-		<img src="{{ url_for('display_image', filename=filename) }}">
-	</div>
+<div class="text-center">
+	<img class="rounded" src="{{ url_for('display_image', filename=filename) }}">
+</div>
 {% endif %}
-<form method="post" action="/" enctype="multipart/form-data">
-    <dl>
-		<p>
-			<input type="file" name="file" autocomplete="off" required>
+
+{% if predectedvalue %}
+<div class="text-center">
+	<label>Predicted corn image is from <b>{{ predectedvalue }} class</b></label>
+</div>
+{% endif %}
+
+<form method="post" action="/" enctype="multipart/form-data" class="text-center">
+	<dl class="d-flex justify-content-center">
+		<p style="width: 20%; align-items: center;">
+			<label class="form-label" style="width:auto !important;" for="customFile">Select Image to Process</label>
+			<input class="form-control" type="file" name="file" autocomplete="off" required />
 		</p>
-    </dl>
-    <p>
-		<input type="submit" value="Submit">
+	</dl>
+	<p>
+		<input class="btn btn-primary" type="submit" value="Submit">
 	</p>
 </form>
